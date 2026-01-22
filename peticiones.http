@@ -1,0 +1,22 @@
+### Listar todos los productos
+GET http://localhost:8080/api/productos
+
+### Separador
+
+### Crear un nuevo producto (El postre)
+POST http://localhost:8080/api/productos
+Content-Type: application/json
+
+{ "nombre": "Producto Fallido",
+  "precio": -10.50,
+  "stock": 5
+}
+### Borrar el producto con ID 6 (el que no tiene precio)
+DELETE http://localhost:8080/api/productos/6
+
+### Actualizar el producto 1 (Coca Cola)
+PUT http://localhost:8080/api/productos/1
+Content-Type: application/json
+### Probando el buscador
+GET http://localhost:8080/api/productos/buscar?nombre=coca
+

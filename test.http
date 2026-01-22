@@ -1,0 +1,9 @@
+### Crear un nuevo producto
+POST http://localhost:8080/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "Tacos al Pastor",
+  "precio": 8.50,
+  "stock": 100
+}
