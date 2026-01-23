@@ -16,14 +16,14 @@ public class ProductoController {
     private ProductoRepository productoRepository;
 
     // Este método nos devuelve todos los productos
-    @GetMapping
-    public List<Producto> obtenerProductos() {
-        return productoRepository.findAll();
-    }
-    @GetMapping("/{id}")
-    public Producto obtenerPorId(@PathVariable Long id) {
-        return productoRepository.findById(id).orElse(null);
-    }
+            @GetMapping
+            public List<Producto> obtenerProductos() {
+                return productoRepository.findAll();
+            }
+            @GetMapping("/{id}")
+            public Producto obtenerPorId(@PathVariable Long id) {
+                return productoRepository.findById(id).orElse(null);
+            }
 
     // Este método sirve para guardar un producto nuevo
     @PostMapping

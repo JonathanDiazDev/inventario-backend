@@ -11,12 +11,48 @@ Content-Type: application/json
   "precio": -10.50,
   "stock": 5
 }
+### Separador
+DELETE http://localhost:8080/api/categorias/1
+
+
+
 ### Borrar el producto con ID 6 (el que no tiene precio)
-DELETE http://localhost:8080/api/productos/6
+DELETE http://localhost:8080/api/productos/1
 
 ### Actualizar el producto 1 (Coca Cola)
 PUT http://localhost:8080/api/productos/1
 Content-Type: application/json
 ### Probando el buscador
-GET http://localhost:8080/api/productos/buscar?nombre=coca
+GET http://localhost:8080/api/productos/9
+
+### Separador
+//agregar categorias a la base de datos
+POST http://localhost:8080/api/categorias
+Content-Type: application/json
+
+{
+  "nombre": "Postres"
+}
+
+### Separador
+//unir un proucto a una categoria
+POST http://localhost:8080/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "Tiramisu",
+  "precio": 69.00,
+  "stock": 30,
+  "categoria": {
+    "id": 4
+  }
+}
+
+### Separador
+
+GET http://localhost:8080/api/categorias
+
+### Separador
+
+DELETE http://localhost:8080/api/productos/7
 
