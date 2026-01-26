@@ -23,7 +23,7 @@ DELETE http://localhost:8080/api/productos/1
 PUT http://localhost:8080/api/productos/1
 Content-Type: application/json
 ### Probando el buscador
-GET http://localhost:8080/api/productos/9
+GET http://localhost:8080/api/productos/2
 
 ### Separador
 //agregar categorias a la base de datos
@@ -56,3 +56,36 @@ GET http://localhost:8080/api/categorias
 
 DELETE http://localhost:8080/api/productos/7
 
+### Separador
+POST http://localhost:8080/api/productos/2/movimientos
+Content-Type: application/json
+
+{
+  "tipo": "ENTRADA",
+  "cantidad": 50
+}
+
+
+### Ver historial del producto 2
+GET http://localhost:8080/api/productos/2/movimientos
+
+###
+
+POST http://localhost:8080/api/productos/2/movimientos
+Content-Type: application/json
+
+{
+  "tipo": "ENTRADA",
+  "cantidad": 0
+}
+
+
+
+### Separador
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "email": "jonathaan",
+  "password": "jonadev"
+}
