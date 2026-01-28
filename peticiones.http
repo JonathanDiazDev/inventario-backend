@@ -1,7 +1,8 @@
 ### Listar todos los productos
 GET http://localhost:8080/api/productos
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhcGkgaW52ZW50b3J5Iiwic3ViIjoiam9uYXRoYWFuIiwiaWQiOjEsImV4cCI6MTc2OTU0MjcwNX0.TzRivMT1eCS2AkBvtrAVkvsftc17IaOSA7PIktrdfO0
 
-### Separador
+###
 
 ### Crear un nuevo producto (El postre)
 POST http://localhost:8080/api/productos
@@ -88,4 +89,13 @@ Content-Type: application/json
 {
   "email": "jonathaan",
   "password": "jonadev"
+}
+
+### Registrar un nuevo usuario
+POST http://localhost:8080/usuarios
+Content-Type: application/json
+
+{
+  "email": "alicia@email.com",
+  "password": "password123"
 }
