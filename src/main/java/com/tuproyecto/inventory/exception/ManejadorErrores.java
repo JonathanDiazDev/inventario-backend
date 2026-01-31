@@ -1,5 +1,6 @@
 package com.tuproyecto.inventory.exception;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,5 +21,10 @@ public class ManejadorErrores {
         });
 
         return ResponseEntity.badRequest().body(errores);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity tratarError404() {
+        return ResponseEntity.notFound().build();
     }
 }

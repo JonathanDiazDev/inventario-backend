@@ -31,6 +31,15 @@ El sistema cuenta con una capa de seguridad robusta implementada con **Spring Se
 * **Control de Acceso:** Configuración de un `SecurityFilterChain` personalizado para restringir el acceso a los endpoints de la API, permitiendo únicamente peticiones autenticadas (exceptuando el inicio de sesión).
 * **Servicio de Detalles de Usuario:** Integración de `UserDetailsService` para una validación personalizada contra la base de datos PostgreSQL.
 
----
+---## 🚀 Progreso del Proyecto
+
+### ✅ Módulo de Inventario (Finalizado)
+- **Gestión de Productos:** Creación, edición y borrado de productos vinculados a categorías.
+- **Control de Stock:** Registro automatizado de entradas y salidas mediante un servicio especializado (`MovimientoService`).
+- **Validaciones:** Control de stock insuficiente y validación de datos mediante Bean Validation.
+
+### 🏗️ Módulo de Pedidos (En Construcción)
+- **Arquitectura:** Definición de modelo Relacional de Pedidos (Encabezado-Detalle).
+- **Entidades:** Implementación de `Pedido` y `DetallePedido` con relaciones `@OneToMany` y `@ManyToOne`.
 
 Desarrollado con ❤️ por [Jonathan Diaz](https://github.com/JonathanDiazDev)

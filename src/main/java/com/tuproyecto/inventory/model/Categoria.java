@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "categorias")
 public class Categoria {
@@ -14,11 +17,20 @@ public class Categoria {
     @Column(nullable = false, unique = true)
     private String nombre;
 
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Producto> productos = new ArrayList<>();
+
     public Categoria() {
 
     }
     public Categoria(String nombre) {
         this.nombre = nombre;
+    }
+
+    public void actualizarDatos(String nuevoNombre) {
+        if (nuevoNombre != null && !nuevoNombre.isBlank()) {
+            this.nombre = nuevoNombre;
+        }
     }
 
     public Long getId() {

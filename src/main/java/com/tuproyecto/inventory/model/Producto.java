@@ -1,5 +1,6 @@
 package com.tuproyecto.inventory.model;
 
+import com.tuproyecto.inventory.dto.DatosRegistroProducto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*; // Importante para las validaciones
 import lombok.Data;
@@ -25,15 +26,19 @@ public class Producto {
     @Min(value = 0, message = "El stock no puede ser negativo")
     private Integer stock;
 
-    @ManyToOne
-    @JoinColumn(name = "categoria_id")
+    @ManyToOne(fetch = FetchType.LAZY) // Lazy para que sea más eficiente
+    @JoinColumn(name = "categoria_id") // Esta será la llave foránea en SQL
     private Categoria categoria;
 
-    public Categoria getCategoria() {
-        return categoria;
+    public Producto (){
+
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public Producto(DatosRegistroProducto datos) {
+
+        this.nombre = datos.nombre();
+        this.precio = datos.precio();
+        this.stock = datos.stock();
+
     }
 }

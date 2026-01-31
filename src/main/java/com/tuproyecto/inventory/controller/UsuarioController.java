@@ -33,5 +33,6 @@ public class UsuarioController {
         repository.save(usuario);
 
         return ResponseEntity.ok().build();
+
     }
 }

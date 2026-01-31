@@ -1,16 +1,21 @@
 package com.tuproyecto.inventory.dto;
-import com.tuproyecto.inventory.model.TipoMovimiento;
-import lombok.Data;
+
+import com.tuproyecto.inventory.model.Movimiento; // Ajusta a tu paquete real
 import java.time.LocalDateTime;
 
-
-@Data
-public class MovimientoResponseDTO {
-    private Long  id;
-    private LocalDateTime fecha;
-    private Integer cantidad;
-    private String nombreProducto;
-
-    private TipoMovimiento tipo;
-
+public record MovimientoResponseDTO(
+        Long id,
+        String nombreProducto,
+        Integer cantidad,
+        LocalDateTime fecha
+) {
+    // Usamos el constructor para mapear la entidad de forma segura
+    public MovimientoResponseDTO(Movimiento m) {
+        this(
+                m.getId(),
+                m.getProducto().getNombre(),
+                m.getCantidad(),
+                m.getFecha()
+        );
+    }
 }
