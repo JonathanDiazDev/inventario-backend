@@ -3,11 +3,11 @@ import com.tuproyecto.inventory.dto.DatosRegistroProducto;
 import com.tuproyecto.inventory.model.Categoria;
 import com.tuproyecto.inventory.model.Producto;
 import com.tuproyecto.inventory.repository.CategoriaRepository;
-import com.tuproyecto.inventory.repository.MovimientoRepository;
 import com.tuproyecto.inventory.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class ProductoService {
 
     @Autowired

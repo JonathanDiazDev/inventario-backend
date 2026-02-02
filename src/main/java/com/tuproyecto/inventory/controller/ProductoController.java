@@ -17,6 +17,7 @@ import com.tuproyecto.inventory.model.Movimiento;
 import com.tuproyecto.inventory.model.TipoMovimiento;
 import java.time.LocalDateTime;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -53,6 +54,16 @@ public class ProductoController {
         return productoRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+    @PostMapping
+    public ResponseEntity<DatosListadoProducto> registrarProducto(@RequestBody @Valid DatosRegistroProducto datos,
+                                                                  UriComponentsBuilder uriBuilder) {
+        Producto producto = productoRepository.save(new Producto(datos));
+
+        // Creamos la URL donde se podrá encontrar el nuevo producto (Best Practice REST)
+        var uri = uriBuilder.path("/api/productos/{id}").buildAndExpand(producto.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(new DatosListadoProducto(producto));
     }
 
     // ✅ CORRECCIÓN 1: Usamos el DTO y buscamos la categoría

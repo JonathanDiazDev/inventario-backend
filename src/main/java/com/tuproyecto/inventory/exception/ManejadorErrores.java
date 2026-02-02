@@ -25,6 +25,14 @@ public class ManejadorErrores {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity tratarError404() {
+
         return ResponseEntity.notFound().build();
+    }
+
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity tratarErrorDeValidacion(RuntimeException e) {
+        // Tomamos el mensaje que pusimos en el "throw new RuntimeException(...)"
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 }

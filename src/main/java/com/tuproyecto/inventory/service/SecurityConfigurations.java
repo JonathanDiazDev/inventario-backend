@@ -18,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @EnableWebSecurity
 @Configuration
+
 public class SecurityConfigurations {
 
     @Bean
@@ -42,7 +43,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/api/productos/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/productos/**").hasRole("ADMIN")
 
-                        .requestMatchers(HttpMethod.GET, "/api/productos/**").hasRole("ADMIN")// <--- El culpable
+                        .requestMatchers(HttpMethod.GET, "/api/productos/**").hasRole("ADMIN")
 
                         // 2. Al final, el candado de seguridad robusta
                         .anyRequest().authenticated()
