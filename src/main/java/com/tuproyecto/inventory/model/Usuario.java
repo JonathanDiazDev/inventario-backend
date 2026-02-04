@@ -36,11 +36,11 @@ public class Usuario implements UserDetails {
     private TipoRol rol;
 
     // ✅ CONSTRUCTOR CORREGIDO
-    public Usuario(String email, String password) {
+    public Usuario(String nombre, String email, String password) {
         this.email = email;
         this.password = password;
         this.rol = TipoRol.USER; // Por defecto, todos nacen como USER
-        this.nombre = email;     // Usamos el email como nombre provisional para que no falle
+        this.nombre = nombre;     // Usamos el email como nombre provisional para que no falle
     }
 
     @Override

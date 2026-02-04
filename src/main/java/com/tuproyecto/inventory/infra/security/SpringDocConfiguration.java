@@ -21,7 +21,7 @@ public class SpringDocConfiguration {
                                 new SecurityScheme()
                                         .type(SecurityScheme.Type.HTTP)
                                         .scheme("bearer")
-                                        .bearerFormat("JTW")))
+                                        .bearerFormat("JWT")))
                 .info(new Info()
                         .title("API Inventory")
                         .description("API Rest de la aplicación Inventory, que contiene las funcionalidades de CRUD de productos y usuarios.")

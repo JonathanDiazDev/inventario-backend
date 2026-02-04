@@ -23,22 +23,29 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/productos")
+@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5174"})
 public class ProductoController {
 
-    @Autowired
-    private ProductoRepository productoRepository;
 
-    @Autowired
-    private MovimientoService movimientoService;
+    private final ProductoRepository productoRepository;
 
-    @Autowired
-    private MovimientoRepository movimientoRepository;
 
-    @Autowired
-    private CategoriaRepository categoriaRepository; // <--- Necesario para buscar la categoría
+    private final MovimientoService movimientoService;
 
-    @Autowired
-    private ProductoService productoService;
+
+    private final MovimientoRepository movimientoRepository;
+
+    private final CategoriaRepository categoriaRepository; // <--- Necesario para buscar la categoría
+
+    private final ProductoService productoService;
+
+    public ProductoController(ProductoRepository productoRepository, MovimientoService movimientoService, MovimientoRepository movimientoRepository, CategoriaRepository categoriaRepository, ProductoService productoService) {
+        this.productoRepository = productoRepository;
+        this.movimientoService = movimientoService;
+        this.movimientoRepository = movimientoRepository;
+        this.categoriaRepository = categoriaRepository;
+        this.productoService = productoService;
+    }
 
     @GetMapping
     public ResponseEntity<List<DatosListadoProducto>> obtenerProductos() {
@@ -58,7 +65,7 @@ public class ProductoController {
     @PostMapping
     public ResponseEntity<DatosListadoProducto> registrarProducto(@RequestBody @Valid DatosRegistroProducto datos,
                                                                   UriComponentsBuilder uriBuilder) {
-        Producto producto = productoRepository.save(new Producto(datos));
+        Producto producto = productoService.registrarProducto(datos);
 
         // Creamos la URL donde se podrá encontrar el nuevo producto (Best Practice REST)
         var uri = uriBuilder.path("/api/productos/{id}").buildAndExpand(producto.getId()).toUri();

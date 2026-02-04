@@ -14,11 +14,16 @@ import java.time.LocalDateTime;
 @Service
 public class MovimientoService {
 
-    @Autowired
-    private ProductoRepository productoRepository;
 
-    @Autowired
-    private MovimientoRepository movimientoRepository;
+    private final ProductoRepository productoRepository;
+
+    private final MovimientoRepository movimientoRepository;
+
+    public MovimientoService(ProductoRepository productoRepository, MovimientoRepository movimientoRepository) {
+        this.productoRepository = productoRepository;
+        this.movimientoRepository = movimientoRepository;
+    }
+
 
     public Movimiento registrarMovimiento(DatosRegistroMovimiento datos) {
         Producto productoEncontrado = productoRepository.findById(datos.productoId())

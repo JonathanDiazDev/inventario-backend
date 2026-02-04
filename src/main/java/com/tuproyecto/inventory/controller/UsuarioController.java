@@ -28,7 +28,7 @@ public class UsuarioController {
 
         String passwordEncriptada = passwordEncoder.encode(datos.password());
 
-        Usuario usuario = new Usuario(datos.email(), passwordEncriptada);
+        Usuario usuario = new Usuario(datos.nombre(), datos.email(), passwordEncriptada);
 
         repository.save(usuario);
 

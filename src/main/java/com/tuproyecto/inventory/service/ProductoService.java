@@ -10,14 +10,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductoService {
 
-    @Autowired
-    private ProductoRepository productoRepository;
 
-    @Autowired
-    private CategoriaRepository categoriaRepository;
+    private final ProductoRepository productoRepository;
+
+    private final CategoriaRepository categoriaRepository;
+
+    public ProductoService(ProductoRepository productoRepository, CategoriaRepository categoriaRepository) {
+        this.productoRepository = productoRepository;
+        this.categoriaRepository = categoriaRepository;
+    }
 
     public Producto registrarProducto(DatosRegistroProducto datos) {
-
 
         Categoria categoria = categoriaRepository.findById(datos.categoriaId())
                 .orElseThrow(()-> new RuntimeException("Categoria no encontrada"));
@@ -25,7 +28,6 @@ public class ProductoService {
         Producto producto = new Producto(datos);
 
         producto.setCategoria(categoria);
-
 
         return productoRepository.save(producto);
     }
