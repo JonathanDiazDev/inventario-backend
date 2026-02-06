@@ -38,7 +38,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "spring.jpa.hibernate.ddl-auto=create-drop",
         "api.security.secret=ClaveSecretaDePruebaParaLosTests1234567890"
 })
-@WebMvcTest(AutenticacionController.class) // 1. Solo cargamos el Controller
 class AutenticacionControllerTest {
 
     @Autowired
