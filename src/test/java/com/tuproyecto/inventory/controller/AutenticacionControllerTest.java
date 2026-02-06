@@ -18,12 +18,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
-// Imports estáticos necesarios
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -34,8 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1",
         "spring.datasource.driverClassName=org.h2.Driver",
         "spring.jpa.database-platform=org.hibernate.dialect.H2Dialect",
-        "api.security.secret=ClaveSecretaDePruebaParaLosTests1234567890",
-        "spring.main.allow-bean-definition-overriding=true" // Permite sobrescribir beans en tests
+        "api.security.secret=ClaveSecretaDePruebaParaLosTests1234567890"
 })
 class AutenticacionControllerTest {
 
@@ -56,28 +55,29 @@ class AutenticacionControllerTest {
 
     @Test
     void debeDevolverTokenCuandoCredencialesSonValidas() throws Exception {
-        // Preparar datos
-        DatosAutenticacionUsuario datosLogin = new DatosAutenticacionUsuario("juan@test.com", "123456");
+        // Preparar el usuario mock
         Usuario usuarioMock = new Usuario("Juan", "juan@test.com", "123456");
 
         Authentication authMock = mock(Authentication.class);
         when(authMock.getPrincipal()).thenReturn(usuarioMock);
-        when(authMock.isAuthenticated()).thenReturn(true); // Forzamos que esté autenticado
 
-        // Mock del manager
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(authMock);
 
-        // Mock del token
-        when(tokenService.generarToken(any(Usuario.class))).thenReturn("token_jwt_simulado_123");
+        // Simulamos el token que genera el servicio
+        String tokenSimulado = "token_jwt_simulado_123";
+        when(tokenService.generarToken(any(Usuario.class))).thenReturn(tokenSimulado);
 
-        // Ejecutar petición
-        mockMvc.perform(post("/auth") // Si tu ruta es /auth, cámbiala aquí
-                        .with(csrf())   // Protege contra el 403 de CSRF
+        DatosAutenticacionUsuario datosLogin = new DatosAutenticacionUsuario("juan@test.com", "123456");
+
+        mockMvc.perform(post("/auth/login") // ⚠️ Asegúrate que esta ruta sea la correcta
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(datosLogin)))
-                .andDo(org.springframework.test.web.servlet.result.MockMvcResultHandlers.print()) // Imprime el error real en consola
+                .andDo(print()) // 👈 Esto imprimirá el JSON en el log si falla
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.token").value("token_jwt_simulado_123"));
+                // Si tu DTO usa otro nombre (ej. tokenJWT), cámbialo aquí:
+                .andExpect(jsonPath("$.token").exists())
+                .andExpect(jsonPath("$.token").value(tokenSimulado));
     }
 }
