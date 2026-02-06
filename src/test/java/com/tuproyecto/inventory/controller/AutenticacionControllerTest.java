@@ -18,6 +18,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
+// 👇 ESTE IMPORT ES VITAL PARA QUITAR EL 403
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -55,9 +57,6 @@ class AutenticacionControllerTest {
     void debeDevolverTokenCuandoCredencialesSonValidas() throws Exception {
         // ARRANGE
         DatosAutenticacionUsuario datosLogin = new DatosAutenticacionUsuario("juan@test.com", "123456");
-
-        // ✅ USAMOS EL CONSTRUCTOR QUE YA TIENES (Nombre, Login, Clave)
-        // Esto soluciona el error en rojo del .setLogin
         Usuario usuarioMock = new Usuario("Juan", "juan@test.com", "123456");
 
         Authentication authMock = mock(Authentication.class);
@@ -69,11 +68,11 @@ class AutenticacionControllerTest {
         when(tokenService.generarToken(any(Usuario.class))).thenReturn("token_jwt_simulado_123");
 
         // ACT & ASSERT
-        // Asegúrate de que tu ruta sea /login o /auth. Si tu controller dice /login, deja esto así:
-        mockMvc.perform(post("/login")
+        mockMvc.perform(post("/login") // ⚠️ REVISA: ¿En tu Controller es /login o /auth?
+                        .with(csrf())   // 🛡️ AQUÍ ESTÁ EL ESCUDO QUE QUITA EL 403
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(datosLogin)))
-                .andExpect(status().isOk())
+                .andExpect(status().isOk()) // Ahora sí debería dar 200
                 .andExpect(jsonPath("$.token").value("token_jwt_simulado_123"));
     }
 }
