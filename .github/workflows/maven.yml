@@ -20,12 +20,10 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      # 1. Empaquetamos la aplicación saltando los tests por defecto
-      # (Esto evita el error de conexión a base de datos)
+      # 1. Compilamos SALTANDO los tests (para evitar error de BD)
       - name: Build with Maven
         run: mvn -B package -DskipTests --file pom.xml
 
-      # 2. Ejecutamos ESPECÍFICAMENTE tu test unitario blindado
-      # (Este sí pasará porque usa Mocks y no necesita PostgreSQL real)
+      # 2. Corremos SOLO tu test unitario (OJO AL ESPACIO AQUÍ 👇)
       - name: Run Auth Unit Tests
-        run: mvn test -Dtest=AutenticacionServiceTestDtest=AutenticacionServiceTest
+        run: mvn test -Dtest=AutenticacionServiceTest
