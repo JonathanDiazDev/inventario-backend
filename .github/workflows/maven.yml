@@ -22,8 +22,4 @@ jobs:
 
       # 1. Compilamos SALTANDO los tests (para evitar error de BD)
       - name: Build with Maven
-        run: mvn -B package -DskipTests --file pom.xml
-
-      # 2. Corremos SOLO tu test unitario (OJO AL ESPACIO AQUÍ 👇)
-      - name: Run Auth Unit Tests
-        run: mvn test -Dtest=AutenticacionServiceTest
+        run: mvn -B package --file pom.xml
